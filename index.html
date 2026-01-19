@@ -214,6 +214,121 @@
     from { opacity: 0; transform: translateY(10px); }
     to { opacity: 1; transform: translateY(0); }
 }
+
+@keyframes glowPulse {
+    0%, 100% {
+        text-shadow:
+            0 0 6px rgba(116,198,157,0.4),
+            0 0 14px rgba(116,198,157,0.25),
+            0 0 26px rgba(197,160,89,0.25);
+    }
+    50% {
+        text-shadow:
+            0 0 12px rgba(116,198,157,0.7),
+            0 0 26px rgba(116,198,157,0.45),
+            0 0 44px rgba(197,160,89,0.45);
+    }
+}
+
+.glow-animate {
+    animation: glowPulse 3s ease-in-out infinite;
+}
+
+.green-glow {
+    color: #ffffff; /* text color */
+    text-shadow:
+        0 0 6px rgba(82, 183, 136, 0.6),
+        0 0 12px rgba(82, 183, 136, 0.45),
+        0 0 24px rgba(82, 183, 136, 0.35);
+}
+
+@keyframes greenGlowPulse {
+    0%, 100% {
+        text-shadow:
+            0 0 6px rgba(82, 183, 136, 0.4),
+            0 0 14px rgba(82, 183, 136, 0.3),
+            0 0 28px rgba(82, 183, 136, 0.25);
+    }
+    50% {
+        text-shadow:
+            0 0 12px rgba(82, 183, 136, 0.7),
+            0 0 28px rgba(82, 183, 136, 0.5),
+            0 0 48px rgba(82, 183, 136, 0.4);
+    }
+}
+
+.green-glow-animate {
+    animation: greenGlowPulse 3s ease-in-out infinite;
+}
+
+@keyframes shinePulse {
+  0%, 100% {
+    text-shadow:
+      0 0 6px rgba(82,183,136,0.6),
+      0 0 12px rgba(82,183,136,0.45),
+      0 0 24px rgba(82,183,136,0.35),
+      0 0 40px rgba(82,183,136,0.2);
+  }
+  50% {
+    text-shadow:
+      0 0 12px rgba(82,183,136,0.9),
+      0 0 28px rgba(82,183,136,0.7),
+      0 0 48px rgba(82,183,136,0.6),
+      0 0 80px rgba(82,183,136,0.4);
+  }
+}
+
+.shine-text {
+  color: #ffffff;
+  animation: shinePulse 2.5s ease-in-out infinite;
+}
+
+.section-title.glow {
+  color: #1b4332;
+  text-shadow: 0 0 5px #52b788, 0 0 15px #52b788, 0 0 30px #74c69d;
+  animation: titleGlow 3s ease-in-out infinite alternate;
+}
+@keyframes titleGlow {
+  0% { text-shadow:0 0 5px #52b788; }
+  50% { text-shadow:0 0 15px #74c69d; }
+  100% { text-shadow:0 0 5px #52b788; }
+}
+.logo-hover-spin {
+  transition: transform 0.6s ease;
+}
+.logo-hover-spin:hover {
+  transform: rotate(360deg) scale(1.1);
+}
+
+.hero-bg-custom::before {
+  content: '';
+  position: absolute;
+  inset:0;
+  background: radial-gradient(circle, rgba(82,183,136,0.15) 0%, transparent 70%);
+  animation: heroPulse 6s ease-in-out infinite alternate;
+  z-index:0;
+}
+
+@keyframes heroPulse {
+  0% { transform: scale(1); opacity:0.3;}
+  50% { transform: scale(1.05); opacity:0.5;}
+  100% { transform: scale(1); opacity:0.3;}
+}
+button:hover {
+  box-shadow: 0 0 20px #52b788, 0 0 40px #74c69d;
+  transform: scale(1.05);
+}
+
+.hero-quote {
+  opacity:0;
+  transform: translateY(20px);
+  animation: quoteFade 2s forwards 0.5s;
+}
+
+@keyframes quoteFade {
+  to { opacity:1; transform: translateY(0);}
+}
+
     </style>
 </head>
 
@@ -261,7 +376,7 @@ window.addEventListener("load", () => {
             COLEGIO DE SAN URIEL
         </div>
         <div class="text-xs tracking-widest uppercase opacity-80">
-            Mandaue City • Est. 1976
+            Mandaue City • Est. 1967
         </div>
        </div>
     </button>
@@ -284,9 +399,11 @@ window.addEventListener("load", () => {
              class="h-28 md:h-40 hidden md:block logo-hover-spin">
 
         <div>
-            <h1 class="text-5xl md:text-7xl mb-6 drop-shadow-lg">
-                Igniting Excellence, Guarding Truth
-            </h1>
+          <h1 class="text-5xl md:text-7xl mb-6 drop-shadow-lg shine-text">
+             Igniting Excellence, Guarding Truth
+          </h1>
+
+
             <p class="italic text-stone-200 mb-8 text-lg">
                 “Wisdom is a flaming sword that clears the path to progress.”
             </p>
@@ -688,7 +805,7 @@ window.addEventListener("load", () => {
     }
   </style>
 
-  <h2 class="section-title">Educational Offerings</h2>
+  <h2 class="section-title glow">Educational Offerings</h2>
   <div class="offerings-container">
     <div class="offer-card">
       <h3>Junior High School</h3>
@@ -756,6 +873,19 @@ window.addEventListener("load", () => {
       const index = Math.floor(Math.random()*rows.length);
       rows[index].classList.add('glow');
     }, 1500);
+
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting) {
+      entry.target.classList.add('popIn');
+    }
+  });
+}, { threshold: 0.3 });
+
+document.querySelectorAll('.offer-card').forEach(card => {
+  observer.observe(card);
+});
+
   </script>
 </section>
 
