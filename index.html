@@ -138,28 +138,134 @@
             animation: spinLogo 2s linear infinite; 
             filter: drop-shadow(0 0 20px #52b788); 
         }
+        .loader {
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(135deg, #1a3c34, #081c15);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    transition: opacity 0.8s ease, visibility 0.8s ease;
+}
+
+.loader.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.loader-content {
+    text-align: center;
+    color: #e9f5ec;
+    animation: fadeInLoader 1.2s ease forwards;
+}
+
+.loader-logo {
+    width: 110px;
+    margin: 0 auto 20px;
+    animation: spinSlow 3s linear infinite;
+    filter: drop-shadow(0 0 20px #52b788);
+}
+
+.loader-content h2 {
+    font-family: 'Cinzel', serif;
+    letter-spacing: 4px;
+    font-size: 1.4rem;
+    margin-bottom: 10px;
+}
+
+.loader-content p {
+    font-size: 0.9rem;
+    opacity: 0.85;
+    margin-bottom: 20px;
+}
+
+.loader-bar {
+    width: 240px;
+    height: 4px;
+    background: rgba(255,255,255,0.25);
+    border-radius: 999px;
+    overflow: hidden;
+    position: relative;
+    margin: 0 auto;
+}
+
+
+.loader-bar::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    width: 40%;
+    background: linear-gradient(90deg, #74c69d, #c5a059);
+    animation: loadingBar 1.5s ease-in-out infinite;
+}
+
+@keyframes spinSlow {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+@keyframes loadingBar {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(250%); }
+}
+
+@keyframes fadeInLoader {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
     </style>
 </head>
 
+<script>
+window.addEventListener("load", () => {
+    const loader = document.getElementById("page-loader");
+
+    const MIN_LOADING_TIME = 3500;
+
+    const start = performance.now();
+
+    setTimeout(() => {
+        loader.classList.add("hidden");
+    }, MIN_LOADING_TIME);
+});
+</script>
+
+
+
 <body class="bg-stone-50 text-slate-800">
+
+    <div id="page-loader" class="loader">
+    <div class="loader-content">
+        <img src="download__7_-removebg-preview.png" alt="Loading Logo" class="loader-logo">
+        <h2>COLEGIO DE SAN URIEL</h2>
+        <p>Preparing Excellence...</p>
+        <div class="loader-bar"></div>
+    </div>
+</div>
 
 <nav class="bg-sanuriel-green sticky top-0 z-50 shadow">
     <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
 
-        <div class="flex items-center space-x-4">
-            <img src="download__7_-removebg-preview.png"
-                 alt="Colegio de San Uriel Seal"
-                 class="h-14 w-auto logo-hover-spin">
+       <button
+    onclick="showSection('home', document.querySelector('.nav-button'))"
+    aria-label="Go to Home"
+    class="flex items-center space-x-4 focus:outline-none group">
 
-            <div class="text-white">
-                <div class="font-serif tracking-widest text-lg">
-                    COLEGIO DE SAN URIEL
-                </div>
-                <div class="text-xs tracking-widest uppercase opacity-80">
-                    Mandaue City • Est. 1976
-                </div>
-            </div>
+    <img src="download__7_-removebg-preview.png"
+         alt="Colegio de San Uriel Seal"
+         class="h-14 w-auto logo-hover-spin group-hover:scale-105 transition-transform duration-300 cursor-pointer">
+
+    <div class="text-white cursor-pointer">
+        <div class="font-serif tracking-widest text-lg group-hover:text-sanuriel-gold transition-colors">
+            COLEGIO DE SAN URIEL
         </div>
+        <div class="text-xs tracking-widest uppercase opacity-80">
+            Mandaue City • Est. 1976
+        </div>
+       </div>
+    </button>
+
 
         <div class="hidden md:flex space-x-8 text-sm uppercase tracking-wider font-semibold">
             <button onclick="showSection('home', this)" class="nav-button text-white hover:text-sanuriel-gold focus:text-sanuriel-gold active:text-sanuriel-gold">Home</button>
@@ -184,7 +290,6 @@
             <p class="italic text-stone-200 mb-8 text-lg">
                 “Wisdom is a flaming sword that clears the path to progress.”
             </p>
-            <center> <h1> <strong> WALA PANI  NAHUMAN GUYS </strong> </h1> </center>
 
             <button onclick="openModal()"
                     class="bg-sanuriel-green px-8 py-3 uppercase tracking-widest font-bold border border-sanuriel-gold hover:bg-emerald-900 transition">
@@ -715,7 +820,12 @@ function showSection(id, button) {
     document.querySelectorAll('.nav-button').forEach(btn => {
         btn.classList.remove('active');
     });
-    if (button) { button.classList.add('active'); }
+    document.querySelectorAll('.nav-button').forEach(btn => {
+    if (btn.textContent.trim() === 'Home') {
+        btn.classList.add('active');
+    }
+});
+
 }
 
 function openModal() {
@@ -729,4 +839,3 @@ function closeModal() {
 
 </body>
 </html>
-
