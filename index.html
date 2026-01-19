@@ -417,6 +417,22 @@ window.addEventListener("load", () => {
             </div>
         </div>
 
+        <!-- Music Player -->
+<div id="music-player" class="fixed bottom-6 left-6 bg-sanuriel-green/90 backdrop-blur-md rounded-xl shadow-2xl p-4 flex items-center space-x-4 z-50">
+  <button id="play-pause" class="bg-white text-sanuriel-green w-12 h-12 flex items-center justify-center rounded-full hover:scale-110 transition-transform">
+    ▶️
+  </button>
+  <div class="flex-1">
+    <div id="track-name" class="text-white font-semibold">Oh, Saint Uriel</div>
+    <input id="progress" type="range" min="0" max="100" value="0" class="w-full h-2 rounded-lg accent-sanuriel-gold">
+  </div>
+  <button id="volume-toggle" class="text-white hover:text-sanuriel-gold transition-colors">🔊</button>
+</div>
+
+<!-- Audio File -->
+<audio id="player" src="C:\Users\Mikay\Documents\Audacity\COLEGIO DE SAN URIEL.wav"></audio>
+
+
         <div class="bg-stone-50 p-10 rounded-lg shadow-md border-t-4 border-sanuriel-gold hover:shadow-xl transition-shadow duration-300">
             <div class="text-center mb-8">
                 <h3 class="text-4xl text-sanuriel-green font-serif mb-4">Why Choose Colegio de San Uriel</h3>
@@ -837,6 +853,47 @@ document.querySelectorAll('.offer-card').forEach(card => {
   observer.observe(card);
 });
 
+const player = document.getElementById('player');
+const playBtn = document.getElementById('play-pause');
+const volumeBtn = document.getElementById('volume-toggle');
+const progress = document.getElementById('progress');
+
+let isPlaying = false;
+let isMuted = false;
+
+// Play / Pause toggle
+playBtn.addEventListener('click', () => {
+    if(isPlaying){
+        player.pause();
+        playBtn.textContent = '▶️';
+    } else {
+        player.play();
+        playBtn.textContent = '⏸️';
+    }
+    isPlaying = !isPlaying;
+});
+
+// Volume toggle
+volumeBtn.addEventListener('click', () => {
+    isMuted = !isMuted;
+    player.muted = isMuted;
+    volumeBtn.textContent = isMuted ? '🔇' : '🔊';
+});
+
+// Update progress bar as audio plays
+player.addEventListener('timeupdate', () => {
+    if(player.duration){
+        progress.value = (player.currentTime / player.duration) * 100;
+    }
+});
+
+// Seek through the track using progress bar
+progress.addEventListener('input', () => {
+    if(player.duration){
+        player.currentTime = (progress.value / 100) * player.duration;
+    }
+});
+
   </script>
 </section>
 
@@ -920,3 +977,4 @@ function closeModal() {
 
 </body>
 </html>
+
