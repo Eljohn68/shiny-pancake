@@ -418,19 +418,25 @@ window.addEventListener("load", () => {
         </div>
 
         <!-- Music Player -->
-<div id="music-player" class="fixed bottom-6 left-6 bg-sanuriel-green/90 backdrop-blur-md rounded-xl shadow-2xl p-4 flex items-center space-x-4 z-50">
-  <button id="play-pause" class="bg-white text-sanuriel-green w-12 h-12 flex items-center justify-center rounded-full hover:scale-110 transition-transform">
+<div id="music-player" class="fixed bottom-6 left-6 bg-sanuriel-green text-white rounded-xl shadow-2xl p-4 flex items-center space-x-4 z-50 border-2 border-sanuriel-gold hover:shadow-[0_0_25px_#c5a059] transition-shadow duration-300">
+  
+  <!-- Play/Pause Button -->
+  <button id="play-pause" class="bg-white text-sanuriel-green w-12 h-12 flex items-center justify-center rounded-full hover:scale-110 transition-transform shadow-md">
     ▶️
   </button>
+
+  <!-- Track Info & Progress -->
   <div class="flex-1">
-    <div id="track-name" class="text-white font-semibold">Oh, Saint Uriel</div>
+    <div id="track-name" class="text-white font-semibold mb-1">Oh, San Uriel</div>
     <input id="progress" type="range" min="0" max="100" value="0" class="w-full h-2 rounded-lg accent-sanuriel-gold">
   </div>
+
+  <!-- Volume Button -->
   <button id="volume-toggle" class="text-white hover:text-sanuriel-gold transition-colors">🔊</button>
 </div>
 
-<!-- Audio File -->
 <audio id="player" src="COLEGIO DE SAN URIEL.wav"></audio>
+
 
 
         <div class="bg-stone-50 p-10 rounded-lg shadow-md border-t-4 border-sanuriel-gold hover:shadow-xl transition-shadow duration-300">
@@ -977,5 +983,6 @@ function closeModal() {
 
 </body>
 </html>
+
 
 
